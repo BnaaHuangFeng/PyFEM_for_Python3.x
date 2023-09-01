@@ -73,11 +73,11 @@ output = [ [0.,0.] ]
 
 #Load step iterator
 for i in range(N):
-  
-  print '================================='
-  print ' Load step %i' % i
-  print '================================='
-  print '  NR iter : |Fext-F(v)|'
+
+  print('=================================')
+  print(' Load step %i' % i)
+  print('=================================')
+  print('  NR iter : |Fext-F(v)|')
 
   #####################################  
   # Compute the new external force    #
@@ -116,7 +116,7 @@ for i in range(N):
     #Increment the Newton-Raphson iteration counter
     iiter += 1
 
-    print '  Iter', iiter, ':', error
+    print('  Iter', iiter, ':', error)
 
     if iiter == iterMax:
       raise RuntimeError('Newton-Raphson iterations did not converge!')
@@ -128,7 +128,7 @@ for i in range(N):
   #Store the output
   output.append( [ v, F(v) ] )
 
-  print '================================='
+  print('=================================')
   
 
 ###############################

@@ -106,7 +106,7 @@ globdat = GlobalData( nodes, elements, dofs )
 # Solution procedure (Box 2.3) #
 ################################
 
-from numpy import zeros, array
+import numpy as np
 from pyfem.fem.Assembly import assembleTangentStiffness
 
 #################################
@@ -116,11 +116,11 @@ from pyfem.fem.Assembly import assembleTangentStiffness
 
 a    = globdat.state
 Da   = globdat.Dstate
-fint = zeros( len(dofs) ) 
-fext = zeros( len(dofs) ) 
+fint = np.zeros( len(dofs) ) 
+fext = np.zeros( len(dofs) ) 
 
 loadDof = dofs.getForType(4,'v')
-Dfext   = zeros( len(dofs) )
+Dfext   = np.zeros( len(dofs) )
 Dfext[loadDof] = -2.*DF
 
 output = [ [0.,0.] ]
@@ -128,10 +128,10 @@ output = [ [0.,0.] ]
 #Load step iterator
 for i in range(N):
   
-  print '================================='
-  print ' Load step %i' % i
-  print '================================='
-  print '  NR iter : L2-norm residual'
+  print('=================================')
+  print(' Load step %i' % i)
+  print('=================================')
+  print('  NR iter : L2-norm residual')
 
   #############################################  
   # Step 2:                                   #
@@ -188,14 +188,14 @@ for i in range(N):
     #Increment the Newton-Raphson iteration counter
     iiter += 1
 
-    print '  Iter', iiter, ':', error
+    print('  Iter', iiter, ':', error)
 
     if iiter == iterMax:
       raise RuntimeError('Newton-Raphson iterations did not converge!')
 
   #Update the state vector
 
-  Da[:]  = zeros( len(dofs) )
+  Da[:]  = np.zeros( len(dofs) )
 
   #Commit history values
   elements.commitHistory()
@@ -203,16 +203,16 @@ for i in range(N):
   #Store the output
   output.append( [ a[loadDof], fint[loadDof] ] )
 
-  print '================================='
+  print('=================================')
   
 
 ###############################
 # Post-processing             #
 ###############################
 
-from pylab import plot, show, xlabel, ylabel
+import matplotlib.pyplot as plt
 
-plot( [-x[0] for x in output], [-0.5*x[1] for x in output], 'ro' )
+plt.plot( [-x[0] for x in output], [-0.5*x[1] for x in output], 'ro' )
 
 #Exact solution
 from math import sqrt
@@ -222,8 +222,8 @@ l = lambda v : sqrt( b**2 +(h-v)**2 )
 F = lambda v : -E * Area * (h-v)/l(v) * (l(v)-l(0))/l(0) + k * v
 
 vrange = arange(0,1.2,0.01)
-plot( vrange, [F(vval) for vval in vrange], 'b-' ) 
-xlabel('v [m]')
-ylabel('F [N]')
+plt.plot( vrange, [F(vval) for vval in vrange], 'b-' ) 
+plt.xlabel('v [m]')
+plt.ylabel('F [N]')
 
-show()
+plt.show()

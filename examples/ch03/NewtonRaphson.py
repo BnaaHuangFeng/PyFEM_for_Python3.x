@@ -46,7 +46,7 @@ while globdat.active:
   outputWriter.run( props , globdat )
   meshWriter  .run( props , globdat )
   graphWriter .run( props , globdat )
-print "Newton-Raphson solver terminated succesfully"
+print ("Newton-Raphson solver terminated succesfully")
 
 
 
