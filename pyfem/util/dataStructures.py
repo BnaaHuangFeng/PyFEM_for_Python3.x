@@ -66,7 +66,9 @@ class GlobalData ( Properties ):
   
   def __init__ ( self, nodes, elements, dofs ):
 
-    Properties.__init__( self, { 'nodes' : nodes, 'elements' : elements, 'dofs' : dofs } )
+    Properties.__init__( self, { 'nodes' : nodes, 'elements' : elements, 'dofs' : dofs } )  # nodes is of class NodeSet
+                                                                                            # elements is of class ElementSet
+                                                                                            # dofs is of class DofSpace
 
     self.state  = np.zeros( len( self.dofs ) )
     self.Dstate = np.zeros( len( self.dofs ) )
@@ -159,7 +161,7 @@ class GlobalData ( Properties ):
     weights = getattr( self, outputName + 'Weights' )
 
     if type(inodes) is int:
-      i = self.nodes.keys().index(inodes)
+      i = list(self.nodes.keys()).index(inodes)
       return data[i,:] / weights[i]
     else:
       outdata=[]

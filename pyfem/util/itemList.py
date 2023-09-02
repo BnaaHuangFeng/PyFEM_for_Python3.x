@@ -44,7 +44,7 @@ class itemList ( dict ):
   def getIndices ( self, IDs ):
     
     if isinstance(IDs,int):
-      return self.keys().index( IDs )
+      return list(self.keys()).index( IDs )
     elif isinstance(IDs,list):
       key_list = list(self.keys())
       return [key_list.index(ID) for ID in IDs]
